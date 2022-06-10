@@ -1,0 +1,44 @@
+.hidden{
+    display: none;
+}
+.d-flex{
+    display: flex;
+}
+ 
+#woocommerce-product-data ul.wc-tabs li.custom-field_options a:before {
+    font-family: WooCommerce; content: '\e600';
+}
+
+.pr_image_field img{
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+}
+.pr_image_field input{
+    height: 100%;
+    min-height: 30px;
+}
+
+table.wp-list-table td.column-pr_image img {
+    margin: 0;
+    width: auto;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+    vertical-align: middle;
+}
+table.wp-list-table .column-pr_image {
+    width: 52px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#post-preview{
+    width: 100%;
+}
+.cstm-buttons{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
