@@ -31,7 +31,7 @@ the_post();
                         </select>
                     </div>
                     <div class="col-12 mb-3">
-                        <input id="newimg" type="file" name="newimg" placeholder="Выберите файл" accept=".img,.png,.jpg">
+                        <input id="newimg" type="file" name="newimg" placeholder="Выберите файл" accept=".jpeg,.png,.jpg">
                     </div>
                     <div class="col-12 mb-3">
                         <input id="create_product" type="submit" value="Создать">

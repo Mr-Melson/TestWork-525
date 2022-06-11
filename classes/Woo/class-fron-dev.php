@@ -17,6 +17,7 @@ class Fron_dev {
 		add_action( 'wp_ajax_cstmpostajax', [ $this, 'cstmpostajax' ] );
 		
 		add_action( 'wp_ajax_create_product', [ $this, 'create_product' ] );
+		add_action( 'wp_ajax_nopriv_create_product', [ $this, 'create_product' ] );
 
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' );
         add_action( 'woocommerce_before_shop_loop_item_title', [ $this, 'cstm_woocommerce_template_loop_product_thumbnail' ], 10 );
@@ -97,7 +98,6 @@ class Fron_dev {
 		$return = array(
             'success' 	=> $result,
             'link'      => $link,
-			'file_link' => $file_link
         );
 
         wp_send_json($return);
