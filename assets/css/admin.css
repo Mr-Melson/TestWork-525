@@ -9,6 +9,10 @@
     font-family: WooCommerce; content: '\e600';
 }
 
+#clear_cstm_fields{
+    margin: 25px;
+}
+
 .pr_image_field img{
     width: 100%;
     height: 100%;

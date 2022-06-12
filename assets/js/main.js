@@ -11,73 +11,99 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 var formData = new FormData();
                 formData.append('action', 'create_product');
 
-                let newimg = document.querySelector('#newimg').files;
-                if (newimg.length > 0) {
-                    var files = newimg;
-                    if( files[0].type == 'image/jpeg' || files[0].type == 'image/png' || files[0].type == 'image/jpg' ){                        
-                        formData.append('newimg', files[0]);
-                        formData.append('filename', files[0].name);
-                    } else{
-                        document.querySelector('#result').innerHTML = 'Выберите изображение формата jpg/jpeg/png';
-                        return false;
-                    }
-                } else {
-                    document.querySelector('#result').innerHTML = 'Добавьте изображение продукта';
-                    return false;
-                }
+                let product_name = document.querySelector('#product_name');
+                let price = document.querySelector('#price');
+                let date_create = document.querySelector('#date_create');
+                let newimg = document.querySelector('#newimg');
+                let type_of_product = document.querySelector('#type_of_product');
 
-                let product_name = document.querySelector('#product_name').value;
-                if (required(product_name)) {
-                    if (allLetter(product_name)) {
-                        formData.append('product_name', product_name);
+                product_name.parentElement.classList = '';
+                price.parentElement.classList = '';
+                date_create.parentElement.classList = '';
+                newimg.parentElement.classList = '';
+                type_of_product.parentElement.classList = '';
+
+                if (required(product_name.value)) {
+                    if (allLetter(product_name.value)) {
+                        formData.append('product_name', product_name.value);
                     } else {
+                        product_name.parentElement.classList = 'error';
+                        product_name.focus();
                         document.querySelector('#result').innerHTML = 'Неверный формат названия';
                         return false;
                     }
                 } else {
+                    product_name.parentElement.classList = 'error';
+                    product_name.focus();
                     document.querySelector('#result').innerHTML = 'Укажите название продукта';
                     return false;
                 }
 
-                let price = document.querySelector('#price').value;
-                if (required(price)) {
-                    if (allnumeric(price)) {
-                        formData.append('price', price);
+                if (required(price.value)) {
+                    if (allnumeric(price.value)) {
+                        formData.append('price', price.value);
                     } else {
+                        price.parentElement.classList = 'error';
+                        price.focus();
                         document.querySelector('#result').innerHTML = 'Неверный формат числа';
                         return false;
                     }
                 } else {
+                    price.parentElement.classList = 'error';
+                    price.focus();
                     document.querySelector('#result').innerHTML = 'Укажите цену продукта';
                     return false;
                 }
 
-                let date_create = document.querySelector('#date_create').value;
-                if (required(date_create)) {
-                    if (validatedate(date_create)) {
-                        formData.append('date_create', date_create);
+                if (required(date_create.value)) {
+                    if (validatedate(date_create.value)) {
+                        formData.append('date_create', date_create.value);
                     } else {
+                        date_create.parentElement.classList = 'error';
+                        date_create.focus();
                         document.querySelector('#result').innerHTML = 'Неверный формат даты';
                         return false;
                     }
                 } else {
+                    date_create.parentElement.classList = 'error';
+                    date_create.focus();
                     document.querySelector('#result').innerHTML = 'Укажите дату создания продукта';
                     return false;
                 }
 
-                let type_of_product = document.querySelector('#type_of_product').value;
-                if (required(type_of_product)) {
-                    if ( 'rare' == type_of_product || 'frequent' == type_of_product || 'unusual' == type_of_product) {
-                        formData.append('type_of_product', type_of_product);
+                if (required(type_of_product.value)) {
+                    if ( 'rare' == type_of_product.value || 'frequent' == type_of_product.value || 'unusual' == type_of_product.value) {
+                        formData.append('type_of_product', type_of_product.value);
                     } else {
+                        type_of_product.parentElement.classList = 'error';
+                        type_of_product.focus();
                         document.querySelector('#result').innerHTML = 'Неверный тип продукта';
                         return false;
                     }
                 } else {
+                    type_of_product.parentElement.classList = 'error';
+                    type_of_product.focus();
                     document.querySelector('#result').innerHTML = 'Укажите тип продукта продукта';
                     return false;
                 }
 
+                if (newimg.files.length > 0) {
+                    var files = newimg.files;
+                    if( files[0].type == 'image/jpeg' || files[0].type == 'image/png' || files[0].type == 'image/jpg' ){                        
+                        formData.append('newimg', files[0]);
+                        formData.append('filename', files[0].name);
+                    } else{
+                        newimg.parentElement.classList = 'error';
+                        newimg.focus();
+                        document.querySelector('#result').innerHTML = 'Выберите изображение формата jpg/jpeg/png';
+                        return false;
+                    }
+                } else {
+                    newimg.parentElement.classList = 'error';
+                    newimg.focus();
+                    document.querySelector('#result').innerHTML = 'Добавьте изображение продукта';
+                    return false;
+                }
 
                 var create_request = new XMLHttpRequest();
                 create_request.open('POST', woocommerce_params.ajax_url, true);
@@ -91,11 +117,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             var resp = JSON.parse(this.response);
 
                             if (resp.link != true) {
-                                document.querySelector('#result').innerHTML = '<a href="' + resp.link + '">Смотреть ' + document.querySelector('#product_name').value + '</a>';
+                                document.querySelector('#result').innerHTML = '<a href="' + resp.link + '">Смотреть ' + document.querySelector('#product_name').value + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40" height="20" fill="#0027ff"><path d="M502.6 278.6l-128 128c-12.51 12.51-32.76 12.49-45.25 0c-12.5-12.5-12.5-32.75 0-45.25L402.8 288H32C14.31 288 0 273.7 0 255.1S14.31 224 32 224h370.8l-73.38-73.38c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l128 128C515.1 245.9 515.1 266.1 502.6 278.6z"/></svg></a>';
                             } else {
                                 document.querySelector('#result').innerHTML = 'Что-то пошло не так...попробуйте снова';
                             }
+                        } else{
+                            document.querySelector('#result').innerHTML = 'Что-то пошло не так...попробуйте снова';
                         }
+                    } else{
+                        document.querySelector('#result').innerHTML = 'Что-то пошло не так...попробуйте снова';
                     }
                 };
             }

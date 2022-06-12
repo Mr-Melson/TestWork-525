@@ -77,6 +77,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
         document.querySelector('#cstm-publish').addEventListener( 'click', function(e){
     
             document.querySelector('input[name=action]').value = 'cstmpostajax';
+
+            let date_create = document.querySelector('#date_create');
+            if (required(date_create.value)) {
+                if (!validatedate(date_create.value)) {
+                    date_create.focus();
+                    alert( 'Неверный формат даты' );
+                    return false;
+                }
+            } else {
+                date_create.focus();
+                alert( 'Укажите дату создания продукта' );
+                return false;
+            }
+
+            let type_of_product = document.querySelector('#type_of_product');
+            if (required(type_of_product.value)) {
+                if ( 'rare' == type_of_product.value || 'frequent' == type_of_product.value || 'unusual' == type_of_product.value || '' == type_of_product.value) {
+                    // NICE
+                } else{
+                    type_of_product.focus();
+                    alert( 'Неверный тип продукта' );
+                    return false;
+                }
+            } else {
+                type_of_product.focus();
+                alert( 'Укажите тип продукта продукта' );
+                return false;
+            }
+
+            let pr_image = document.querySelector('#pr_image');
+            if (!required(pr_image.value)) {
+                pr_image.closest('.pr_image_field').querySelector('.upload_button').focus();
+                alert( 'Укажите изображение продукта' );
+                return false;
+            }
+
             var data = jQuery("#post").serialize()
     
             jQuery.ajax({
@@ -95,3 +131,56 @@ document.addEventListener("DOMContentLoaded", function(event) {
         })
     }
 })
+
+function required(input) {
+    if (input.length == 0) {
+        return false;
+    }
+    return true;
+}
+
+function validatedate(inputText) {
+    var dateformat = /^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$/;
+    // Match the date format through regular expression
+    if (inputText.match(dateformat)) {
+        //Test which seperator is used '/' or '-'
+        var opera1 = inputText.split('/');
+        var opera2 = inputText.split('-');
+        lopera1 = opera1.length;
+        lopera2 = opera2.length;
+        // Extract the string into month, date and year
+        if (lopera1 > 1) {
+            var pdate = inputText.split('/');
+        }
+        else if (lopera2 > 1) {
+            var pdate = inputText.split('-');
+        }
+        var yy = parseInt(pdate[0]);
+        var mm = parseInt(pdate[1]);
+        var dd = parseInt(pdate[2]);
+        // Create list of days of a month [assume there is no leap year by default]
+        var ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        if (mm == 1 || mm > 2) {
+            if (dd > ListofDays[mm - 1]) {
+                return false;
+            }
+        }
+        if (mm == 2) {
+            var lyear = false;
+            if ((!(yy % 4) && yy % 100) || !(yy % 400)) {
+                lyear = true;
+            }
+            if ((lyear == false) && (dd >= 29)) {
+                return false;
+            }
+            if ((lyear == true) && (dd > 29)) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+
+    return true;
+}

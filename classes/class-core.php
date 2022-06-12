@@ -44,7 +44,7 @@ final class Core {
 		new Setup_Theme();
 		new Menu\Menu();
 		new Woo\Admin_dev();
-		new Woo\Fron_dev();
+		new Woo\Front_dev();
 	}
 
 	/**

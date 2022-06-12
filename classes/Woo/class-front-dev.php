@@ -7,7 +7,7 @@
 
 namespace Abelohost\Woo;
 
-class Fron_dev {
+class Front_dev {
 
     /**
 	 * Constructor. Initializes class autoloading.
@@ -64,7 +64,7 @@ class Fron_dev {
 
 			if( !empty($_POST['product_name']) ){
 				$post_data = array(
-					'post_title'    => $_POST['product_name'],
+					'post_title'    => sanitize_text_field($_POST['product_name']),
 					'post_type'		=> 'product',
 					'post_status'   => 'publish',
 					'post_author'   => 1,
@@ -79,18 +79,17 @@ class Fron_dev {
 				$link = get_permalink($post_id);
 
 				if( '' != $file_link ){
-					update_post_meta( $post_id, 'pr_image', $file_link );
+					update_post_meta( $post_id, 'pr_image', sanitize_text_field( $file_link ) );
 				}
 				if( '' != $_POST['date_create'] ){
-					update_post_meta( $post_id, 'date_create', $_POST['date_create'] );
+					update_post_meta( $post_id, 'date_create', sanitize_text_field( $_POST['date_create'] ) );
 				}
 				if( '' != $_POST['type_of_product'] ){
-					update_post_meta( $post_id, 'type_of_product', $_POST['type_of_product'] );
+					update_post_meta( $post_id, 'type_of_product', sanitize_text_field( $_POST['type_of_product'] ) );
 				}
 				if( '' != $_POST['price'] ){
-                    $product = wc_get_product( $post_id );
-					update_post_meta( $post_id, '_regular_price', $_POST['price'] );
-					update_post_meta( $post_id, '_price', $_POST['price'] );
+					update_post_meta( $post_id, '_regular_price', sanitize_text_field( $_POST['price'] ) );
+					update_post_meta( $post_id, '_price', sanitize_text_field( $_POST['price'] ) );
 				}
 			}
 		}
@@ -105,7 +104,7 @@ class Fron_dev {
 
 	public function cstm_woocommerce_template_loop_product_thumbnail() {
 
-        $pr_image = get_post_meta( get_the_ID(), "pr_image", true );
+        $pr_image = esc_url( get_post_meta( get_the_ID(), "pr_image", true ) );
         if( '' != $pr_image ){
             echo '<img src="'.$pr_image.'" alt="Thumb">';
         } else{

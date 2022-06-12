@@ -25,6 +25,24 @@ ul li{
     padding: 5px 15px;
 }
 
+#result a{
+    display: flex;
+    font-size: 20px;
+    font-weight: 500;
+    color: #0027ff;
+}
+#result a svg{
+    margin-top: 7px;
+}
+
+.create_product_form p.error input,
+.create_product_form p.error select,
+.create_product_form p.error input:focus-visible,
+.create_product_form p.error select:focus-visible{
+    border: 2px solid red !important;
+    outline: red auto 1px;
+}
+
 /* Loading */
 .loader-bg {
     display: flex;
