@@ -82,10 +82,10 @@ class Front_dev {
 					update_post_meta( $post_id, 'pr_image', sanitize_text_field( $file_link ) );
 				}
 				if( '' != $_POST['date_create'] ){
-					update_post_meta( $post_id, 'date_create', sanitize_text_field( $_POST['date_create'] ) );
+					update_post_meta( $post_id, 'date_create', $_POST['date_create'] );
 				}
 				if( '' != $_POST['type_of_product'] ){
-					update_post_meta( $post_id, 'type_of_product', sanitize_text_field( $_POST['type_of_product'] ) );
+					update_post_meta( $post_id, 'type_of_product', $_POST['type_of_product'] );
 				}
 				if( '' != $_POST['price'] ){
 					update_post_meta( $post_id, '_regular_price', sanitize_text_field( $_POST['price'] ) );

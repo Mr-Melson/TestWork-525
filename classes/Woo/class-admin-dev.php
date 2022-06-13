@@ -96,18 +96,18 @@ class Admin_dev {
     public function save_custom_field_option_fields( $post_id ) {
 
         if ( empty( $_POST['date_create'] ) ) :
-            update_post_meta( $post_id, 'date_create', sanitize_text_field( get_the_date( 'Y-m-d', $post_id ) ) );
+            update_post_meta( $post_id, 'date_create', get_the_date( 'Y-m-d', $post_id ) );
         else:
             if( $this->validateDate( $_POST['date_create'] ) ):
-                update_post_meta( $post_id, 'date_create', sanitize_text_field( $_POST['date_create'] ) );
+                update_post_meta( $post_id, 'date_create', $_POST['date_create'] );
             else:
-                update_post_meta( $post_id, 'date_create', sanitize_text_field( get_the_date( 'Y-m-d', $post_id ) ) );
+                update_post_meta( $post_id, 'date_create', get_the_date( 'Y-m-d', $post_id ) );
             endif;
         endif;
 
         if ( isset( $_POST['type_of_product'] ) ) :
             if( in_array( $_POST['type_of_product'], array('rare', 'frequent', 'unusual') ) ):
-                update_post_meta( $post_id, 'type_of_product', sanitize_text_field( $_POST['type_of_product'] ) );
+                update_post_meta( $post_id, 'type_of_product', $_POST['type_of_product'] );
             else:
                 update_post_meta( $post_id, 'type_of_product', '' );
             endif;
